@@ -1,6 +1,3 @@
-
-
-
 ###Read the data
 get_data_frame <- function(file_name){
   
