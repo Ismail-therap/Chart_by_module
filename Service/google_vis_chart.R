@@ -64,7 +64,7 @@ dychart_chart_by_date <- function(Table_name_from_db,Table_type,inidate){
     )
   )
   
-  plotting_object <- dygraph(dat,main = "Total count by date") %>% 
+  plotting_object <- dygraph(dat) %>% 
     dyAxis("y", label = "Total count") %>%
     dyAxis("x", label = "Date") %>%
     dyHighlight(highlightSeriesOpts = list(strokeWidth = 1))%>%
