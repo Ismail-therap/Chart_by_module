@@ -1,0 +1,25 @@
+===============Desktop module======================
+
+All desktop start from 1 Jan 2011 and end 29 april 2016.
+
+
+=========Mobile module ==============================
+
+ANDROID_APP_ISP_COUNT: Start 01-SEP-13 and end 4 feb 2016.
+
+
+All other mobile module start from 1 Jan 2016 to 30 July 2016. (if there is error then start after april 15, 2016 ).
+
+===============================================================================================================================
+
+The geo chart (map) available only for ANDROID_APP_LOGIN_COUNT and IOS_APP_LOGIN_COUNT.
+
+
+
+
+
+
+
+
+
+

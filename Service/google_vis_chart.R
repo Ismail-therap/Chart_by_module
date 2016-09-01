@@ -2,7 +2,14 @@
 # source("Model/data_preperation_new.R")
 source("Model/aggrigating_subsetted_data.R")
 
-google_vis_line_chart <- function(Table_name_from_db,Table_type,inidate){
+
+
+
+
+
+
+
+google_vis_line_chart <- function(Table_name_from_db,Table_type,inidate, chart_for ){
   
   library(googleVis)
   ####### Loading data from Model #############################################
@@ -39,37 +46,73 @@ google_vis_line_chart <- function(Table_name_from_db,Table_type,inidate){
   
 
   ##### Merging the charts ###################################################
-  merged.output.chart1 <- gvisMerge(single_day, seven_day, horizontal = T)
-  merged.output.chart2 <- gvisMerge(for_a_month,for_a_year, horizontal = T)
-  merged.output.chart_by_t_interval <- gvisMerge(merged.output.chart1,merged.output.chart2, horizontal = FALSE)
-  return(merged.output.chart_by_t_interval)
+   if(chart_for == "selected date") {
+     return(single_day)
+   }
+  else if (chart_for == "consecutive 7 days") {
+    return(seven_day)
+  }
+  else if (chart_for == "consecutive 30 days") {
+    return(for_a_month)
+  }
+  else if (chart_for == "consecutive 365 days") {
+    return(for_a_year)
+  }
+  # merged.output.chart1 <- gvisMerge(single_day, seven_day, horizontal = T)
+  # merged.output.chart2 <- gvisMerge(for_a_month,for_a_year, horizontal = T)
+  # merged.output.chart_by_t_interval <- gvisMerge(merged.output.chart1,merged.output.chart2, horizontal = FALSE)
+  # return(merged.output.chart_by_t_interval)
   
 }
 
 
+#a_year_data <- aggrigated_usage_count_by_date("IOS_APP_LOGIN_COUNT","Eastern","2016-03-13",period = 4)
 
 
-dychart_chart_by_date <- function(Table_name_from_db,Table_type,inidate){
+
+
+
+dychart_chart_by_date <- function(Table_name_from_db,Table_type,inidate,chart_for){
 
   
   library(dygraphs)
   library(xts)
   ####### Loading data from Model #############################################
-  a_year_data_by_date <- aggrigated_usage_count_by_date(Table_name_from_db,Table_type,inidate,period = 4)
+  if(chart_for == "selected date") {
+    a_single_data_by_date <- aggrigated_usage_count_by_date(Table_name_from_db,Table_type,inidate,period = 1)
+    data <- a_single_data_by_date
+  }
+  
+  else if (chart_for == "consecutive 7 days") {
+    a_seven_data_by_date <- aggrigated_usage_count_by_date(Table_name_from_db,Table_type,inidate,period = 2)
+    data <- a_seven_data_by_date
+  }
+  
+  else if (chart_for == "consecutive 30 days") {
+    a_month_data_by_date <- aggrigated_usage_count_by_date(Table_name_from_db,Table_type,inidate,period = 3)
+    data <- a_month_data_by_date
+  }
+  
+  else if (chart_for == "consecutive 365 days") {
+    
+    a_year_data_by_date <- aggrigated_usage_count_by_date(Table_name_from_db,Table_type,inidate,period = 4)
+    data <- a_year_data_by_date
+  }
+  
 
   dat <- as.xts(
-    a_year_data_by_date[-1]
+    data[-1]
     , order.by = as.Date(
-      paste0(a_year_data_by_date$Date,format="%Y-%m-%d")
+      paste0(data$Date,format="%Y-%m-%d")
     )
   )
   
-  plotting_object <- dygraph(dat) %>% 
+  plotting_object <- dygraph(dat,main="Counts by day") %>% 
     dyAxis("y", label = "Total count") %>%
     dyAxis("x", label = "Date") %>%
     dyHighlight(highlightSeriesOpts = list(strokeWidth = 1))%>%
     dyOptions(fillGraph = F, drawGrid = F)%>%
-    dyLegend(width = 600)%>%
+    dyLegend( show = c("follow"), width = 200,labelsSeparateLines = T)%>%
     dyRangeSelector(height=20)
   
   return(plotting_object)

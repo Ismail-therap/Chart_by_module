@@ -120,6 +120,8 @@ aggrigated_usage_count_by_date <- function(Table_name_from_db,Table_type,inidate
   
   else{
     susetted_data_by_date <- aggregate(susetted_data[,3:6],by = list(susetted_data$EVENT_DATE),FUN = sum)
+    #susetted_data_by_date$Total <- susetted_data_by_date[,3]+susetted_data_by_date[,4]+susetted_data_by_date[,5]+susetted_data_by_date[,6]
+    
     
   }
   
