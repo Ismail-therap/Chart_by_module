@@ -4,11 +4,6 @@ source("Model/aggrigating_subsetted_data.R")
 
 
 
-
-
-
-
-
 google_vis_line_chart <- function(Table_name_from_db,Table_type,inidate, chart_for ){
   
   library(googleVis)
@@ -39,6 +34,9 @@ google_vis_line_chart <- function(Table_name_from_db,Table_type,inidate, chart_f
 
   
   ###### Creating gvis objects ################################################
+  
+  
+  
   single_day <- gvisLineChart(single_day_data, xvar = "Time", option = options_single_day)
   seven_day <- gvisLineChart(seven_day_data, xvar = "Time", option = options_seven_day)
   for_a_month <- gvisLineChart(a_month_data, xvar = "Time", option = options_month)

@@ -19,6 +19,9 @@ data_from_sql_data_base <- function(Table_name_from_db, Table_type, inidate, per
   
   dat <- Eastern_data_from_SQL_data_base(Table_name_from_db, inidate, period)
   
+  validate(need(nrow(dat)!=0,"No data to show!")) # Handling the error output!!!
+  
+  
   dat$CENTRAL_LOCAL <- row_shift(dat$CENTRAL, -60)
   dat$MOUNTAIN_LOCAL <- row_shift(dat$MOUNTAIN, -120)
   dat$PACIFIC_LOCAL <- row_shift(dat$PACIFIC, -180)
@@ -86,7 +89,9 @@ data_from_sql_data_base <- function(Table_name_from_db, Table_type, inidate, per
 aggrigated_usage_count_by_t_interval <- function(Table_name_from_db,Table_type,inidate,period){
   
   susetted_data <- data_from_sql_data_base(Table_name_from_db,Table_type,inidate,period)
-
+  
+  validate(need(nrow(susetted_data) !=0,"No data to show!")) # Handling the error output!!!
+  
   if(ncol(susetted_data) > 6) {
     susetted_data_by_t_interval <- aggregate(susetted_data[,3:7],by = list(susetted_data$T_INTERVAL),FUN = sum)
 
@@ -112,6 +117,8 @@ aggrigated_usage_count_by_t_interval <- function(Table_name_from_db,Table_type,i
 aggrigated_usage_count_by_date <- function(Table_name_from_db,Table_type,inidate,period){
   
   susetted_data <- data_from_sql_data_base(Table_name_from_db,Table_type,inidate,period)
+  validate(need(nrow(susetted_data) !=0,"No data to show!")) # Handling the error output!!!
+  
   
   if(ncol(susetted_data) > 6) {
     susetted_data_by_date <- aggregate(susetted_data[,3:7],by = list(susetted_data$EVENT_DATE),FUN = sum)

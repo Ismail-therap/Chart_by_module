@@ -160,6 +160,9 @@ output$text <- renderUI({
   
      if (is.null(input$dataA)||is.null(input$date))
       return()
+      
+      
+    
   
       geo_chart_by_state(Table_A = input$dataA, inidate = input$date, chart_for = input$Chart_for)
   
@@ -205,12 +208,14 @@ output$text <- renderUI({
   
         
         output$Linechart<- renderGvis({
-         
+
                  "Explore the module" = chart_input1()
           
         })
         
         output$geo_chart<- renderGvis({
+          
+         
           
           "Explore the module" = chart_input_state()
           
@@ -218,11 +223,15 @@ output$text <- renderUI({
         
         output$Linechart_by_date<- renderDygraph({
           
+        
+          
                  "Explore the module" = chart_input2()
           
         }) 
         
         output$bar_chart<- renderPlotly({
+          
+         
           
                  "Compare between modules" = chart_input3()
           
@@ -230,12 +239,15 @@ output$text <- renderUI({
         
         output$line_chart_comp1<- renderGvis({
           
+        
+          
                  "Compare between modules" = chart_input4()
           
         })
         
         
         output$line_chart_comp2<- renderGvis({
+        
           
                  "Compare between modules" = chart_input5()
           

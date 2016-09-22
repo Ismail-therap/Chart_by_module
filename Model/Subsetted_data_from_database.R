@@ -138,7 +138,9 @@ Eastern_data_from_SQL_data_base <- function(Table_name_from_db, inidate, period)
 
 
 
-
+########################################################################
+############For geo chart data preperation (Data for state)############
+########################################################################
 
 build_query_for_selected_state <- function(Table_name_from_db, inidate,n_day) {
   
@@ -206,6 +208,14 @@ finalize_sql_query_desired_period_state <- function(Table_name_from_db, inidate,
 
 ##### Date extraction from database 
 Data_from_SQL_data_base_state <- function(Table_name_from_db, inidate, period) {
+  
+  geo_data_available <- list("ANDROID_APP_LOGIN_COUNT","IOS_APP_LOGIN_COUNT")
+  validate(need(Table_name_from_db == geo_data_available ,"No data to show!")) # Handling the error output!!!
+
+           
+           
+             
+  
   query <- finalize_sql_query_desired_period_state(Table_name_from_db, inidate, period) 
   dat <- dbGetQuery(ROracle_con, query)
   
@@ -222,14 +232,20 @@ Data_from_SQL_data_base_state <- function(Table_name_from_db, inidate, period) {
 
 ########################
 
-#dat <- Data_from_SQL_data_base_state(Table_name_from_db="ANDROID_APP_LOGIN_COUNT", inidate="2016-05-05", period=1)
+#dataM <- Data_from_SQL_data_base_state(Table_name_from_db="ANDROID_APP_MAR_COUNT", inidate="2016-05-05", period=1)
+
+
+
+
 ########################
 
 
 state_count_by_date <- function(Table_name_from_db,inidate,period){
   
+  
   susetted_data <- Data_from_SQL_data_base_state(Table_name_from_db,inidate,period)
   
+  validate(need(nrow(susetted_data)>1,"No data to show!"))
   
   susetted_data1 <- aggregate(susetted_data[,3],by = list(susetted_data$DATESTAMP,susetted_data$STATE),FUN = sum)
   

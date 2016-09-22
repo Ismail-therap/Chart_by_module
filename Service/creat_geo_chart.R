@@ -1,5 +1,10 @@
 source("Model/Subsetted_data_from_database.R")
 
+# ?state_count_by_date
+# data_TableL <- state_count_by_date("ANDROID_APP_ISP_COUNT","2016-04-04",period = 1)
+# 
+# #state_count_by_date(Table_name_from_db="ANDROID_APP_LOGIN_COUNT", inidate="2016-04-04", period=3)
+
 
 
 geo_chart_by_state <- function(Table_A,inidate, chart_for ){
@@ -8,7 +13,8 @@ geo_chart_by_state <- function(Table_A,inidate, chart_for ){
     
     Table_name_from_db <- Table_A
     data_TableA <- state_count_by_date(Table_name_from_db,inidate,period = 1)
-    
+
+
     options_TableA = list(title = Table_A ,region="US",displayMode="regions",resolution="provinces",width=500, height=350)
     
     TableA <- gvisGeoChart(data_TableA, "State", "Count",
